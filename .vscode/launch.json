@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Aufgabe1_ExeptionHandling",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\Aufgabe1_ExeptionHandling\\Aufgabe1_ExeptionHandling.csproj",
+            "launchConfigurationId": "TargetFramework=;Aufgabe1_ExeptionHandling"
+        },
+        {
+            "name": "Aufgabe2_Eingabewiederholung",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\Aufgabe2_Eingabewiederholung\\Aufgabe2_Eingabewiederholung.csproj",
+            "launchConfigurationId": "TargetFramework=;Aufgabe2_Eingabewiederholung"
+        },
+        {
+            "name": "Aufgabe3_Methodenüberladung",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\Aufgabe3_Methodenüberladung\\Aufgabe3_Methodenüberladung.csproj",
+            "launchConfigurationId": "TargetFramework=;Aufgabe3_Methodenüberladung"
+        },
+
+    ]
+}

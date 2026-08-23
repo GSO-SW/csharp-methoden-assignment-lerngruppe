@@ -2,7 +2,7 @@
   "tests": [
     {
       "name": "Task1_ExeptionHandling",
-      "setup": "sudo apt-get update && sudo apt-get install -y apt-transport-https && sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0",
+      "setup": "sudo apt-get update && sudo apt-get install -y apt-transport-https && sudo apt-get update && sudo apt-get install -y dotnet-sdk-8.0",
       "run": "DOTNET_CLI_HOME=/tmp/ dotnet test --filter TestCategory=Task1",
       "input": "",
       "output": "",
