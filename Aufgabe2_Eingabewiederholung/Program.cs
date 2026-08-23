@@ -3,7 +3,6 @@
 
 
 
-using System.Xml.Linq;
 /// <summary>
 /// SAS statische Methode
 /// Arbeitsauftrag 1 - Aufgabe 2

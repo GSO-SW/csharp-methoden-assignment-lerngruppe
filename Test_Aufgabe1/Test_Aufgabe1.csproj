@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Aufgabe1_ExeptionHandling\Aufgabe1_ExeptionHandling.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\TestSupport\KonsolenTest.cs" Link="KonsolenTest.cs" />
+  </ItemGroup>
+
 </Project>

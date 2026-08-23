@@ -1,167 +1,116 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 
 namespace Test_Task1
 {
     [TestClass]
     public class UnitTest1
     {
-
-        [TestMethod, TestCategory("Task1")]
+        [TestMethod, Timeout(3000)]
+        [TestCategory("Task1")]
         [TestCategory("InOut")]
         [TestProperty("GSO-DevGroup", "Kander")]
-        [DataRow("test", 0, "Keine ganze Zahl!")]
-
-        public void Test_GanzeZahl(string input, int ergebnis, string fehler)
+        [DataRow("Avinash", DisplayName = "Gültiger Name wird unverändert zurückgegeben")]
+        [DataRow("avinash_superstar@theblock.com", DisplayName = "Gültige E-Mail wird unverändert zurückgegeben")]
+        public void Test_StringErfolg(string input)
         {
-            Environment.SetEnvironmentVariable("IsTesting", "true");
+            using KonsolenTest konsole = new KonsolenTest(input);
 
-            // Arrange
-            var writer = new StringWriter();
-            Console.SetOut(writer);
+            string ausgabe = Aufgabe_1.EingabeRoutineString();
 
-            var textReader = new StringReader(@$"{input}");
-            Console.SetIn(textReader);
-
-            // Act
-            int ausgabe = Aufgabe_1.EingabeRoutineInt32();
-
-            // Assert
-            Assert.AreEqual(ergebnis, ausgabe);
-            List<string> lines_list_check = new List<string> { fehler };
-            AssertTest(writer, lines_list_check);
-
-            Environment.SetEnvironmentVariable("IsTesting", null);
+            RueckgabePruefung.IstGleich(
+                input,
+                ausgabe,
+                "EingabeRoutineString() soll die eingelesene Zeichenfolge zurückgeben.",
+                "Lies die Eingabe mit Console.ReadLine() und gib diesen Wert direkt zurück.");
         }
 
-        [TestMethod, TestCategory("Task1")]
+        [TestMethod, Timeout(3000)]
+        [TestCategory("Task1")]
+        [TestCategory("InOut")]
+        [TestProperty("GSO-DevGroup", "Kander")]
+        [DataRow("test", 0, "Keine ganze Zahl!", DisplayName = "Text statt Zahl: Meldung und Rückgabe 0")]
+        [DataRow("siebzehn", 0, "Keine ganze Zahl!", DisplayName = "Wort 'siebzehn': Meldung und Rückgabe 0")]
+        [DataRow("17.5", 0, "Keine ganze Zahl!", DisplayName = "Kommazahl ist keine ganze Zahl")]
+        public void Test_GanzeZahl(string input, int ergebnis, string fehler)
+        {
+            using KonsolenTest konsole = new KonsolenTest(input);
+
+            int ausgabe = Aufgabe_1.EingabeRoutineInt32();
+
+            RueckgabePruefung.IstGleich(
+                ergebnis,
+                ausgabe,
+                $"EingabeRoutineInt32() wurde mit \"{input}\" aufgerufen.",
+                "Wenn Convert.ToInt32 fehlschlägt, fange die Exception und gib 0 zurück.");
+
+            konsole.MussZeileEnthalten(
+                fehler,
+                "Gib die Meldung mit Console.WriteLine genau so aus, wie in der Aufgabenstellung (inkl. Ausrufezeichen).");
+        }
+
+        [TestMethod, Timeout(3000)]
+        [TestCategory("Task1")]
         [TestCategory("InOut")]
         [TestProperty("GSO-DevGroup", "Kander")]
         public void Test_GanzeZahlErfolg()
         {
-            Environment.SetEnvironmentVariable("IsTesting", "true");
+            using KonsolenTest konsole = new KonsolenTest("10");
 
-            // Arrange
-            var writer = new StringWriter();
-            Console.SetOut(writer);
-
-            var textReader = new StringReader(@$"10");
-            Console.SetIn(textReader);
-
-            // Act
             int ausgabe = Aufgabe_1.EingabeRoutineInt32();
 
-            // Assert
-            Assert.AreEqual(10, ausgabe);
+            RueckgabePruefung.IstGleich(
+                10,
+                ausgabe,
+                "EingabeRoutineInt32() wurde mit der gültigen Eingabe \"10\" aufgerufen.",
+                "Wandle die Eingabe mit Convert.ToInt32 (oder int.Parse) um und gib die Zahl zurück.");
 
-
-            Environment.SetEnvironmentVariable("IsTesting", null);
+            konsole.DarfZeileNichtEnthalten(
+                "Keine ganze Zahl!",
+                "Die Fehlermeldung darf nur erscheinen, wenn die Eingabe keine ganze Zahl ist.");
         }
 
-        [TestMethod, TestCategory("Task1")]
+        [TestMethod, Timeout(3000)]
+        [TestCategory("Task1")]
         [TestCategory("InOut")]
         [TestProperty("GSO-DevGroup", "Kander")]
-        [DataRow("test", 0.0, "Keine reelle Zahl!")]
-
+        [DataRow("test", 0.0, "Keine reelle Zahl!", DisplayName = "Text statt Zahl: Meldung und Rückgabe 0.0")]
+        [DataRow("1 meter 70", 0.0, "Keine reelle Zahl!", DisplayName = "Text '1 meter 70' ist keine reelle Zahl")]
         public void Test_ReelleZahl(string input, double ergebnis, string fehler)
         {
-            Environment.SetEnvironmentVariable("IsTesting", "true");
+            using KonsolenTest konsole = new KonsolenTest(input);
 
-            // Arrange
-            var writer = new StringWriter();
-            Console.SetOut(writer);
-
-            var textReader = new StringReader(@$"{input}");
-            Console.SetIn(textReader);
-
-            // Act
             double ausgabe = Aufgabe_1.EingabeRoutineDouble();
 
-            // Assert
-            Assert.AreEqual(ergebnis, ausgabe);
-            List<string> lines_list_check = new List<string> { fehler };
-            AssertTest(writer, lines_list_check);
+            RueckgabePruefung.IstGleich(
+                ergebnis,
+                ausgabe,
+                $"EingabeRoutineDouble() wurde mit \"{input}\" aufgerufen.",
+                "Wenn Convert.ToDouble fehlschlägt, fange die Exception und gib 0.0 zurück.");
 
-            Environment.SetEnvironmentVariable("IsTesting", null);
+            konsole.MussZeileEnthalten(
+                fehler,
+                "Gib genau 'Keine reelle Zahl!' aus. Achte auf die Schreibweise (reelle, nicht reale).");
         }
 
-        [TestMethod, TestCategory("Task1")]
+        [TestMethod, Timeout(3000)]
+        [TestCategory("Task1")]
         [TestCategory("InOut")]
         [TestProperty("GSO-DevGroup", "Kander")]
-
         public void Test_ReelleZahlErfolg()
         {
-            Environment.SetEnvironmentVariable("IsTesting", "true");
+            using KonsolenTest konsole = new KonsolenTest("10.23");
 
-            // Arrange
-            var writer = new StringWriter();
-            Console.SetOut(writer);
-
-            var textReader = new StringReader(@$"{10.23}");
-            Console.SetIn(textReader);
-
-            // Act
             double ausgabe = Aufgabe_1.EingabeRoutineDouble();
 
-            // Assert
-            Assert.AreEqual(10.23, ausgabe);
-        }
+            RueckgabePruefung.IstGleich(
+                10.23,
+                ausgabe,
+                "EingabeRoutineDouble() wurde mit der gültigen Eingabe \"10.23\" aufgerufen.",
+                "Wandle die Eingabe mit Convert.ToDouble (oder double.Parse) um und gib die Zahl zurück.");
 
-
-
-
-        public static void AssertTest(StringWriter writer, List<string> lines_list_check)
-        {
-
-            // Assert
-
-            var sb = writer.GetStringBuilder();
-            var lines = sb.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.TrimEntries);
-
-            List<string> lines_list = new List<string>();
-
-            //Bedingung nötig da 'Enviroment.NewLine' in Git Actions nicht funktioniert.
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i] != "")
-                {
-                    lines_list.Add(lines[i]);
-                    Debug.WriteLine($"{lines[i]}");
-                }
-            }
-
-
-
-
-
-            lines_list = lines_list.Intersect(lines_list_check).ToList();
-
-
-
-            for (int i = 0; i < lines_list_check.Count; i++)
-            {
-
-                try
-                {
-                    if (lines_list[i] != lines_list_check[i]) Trace.WriteLine($"\nFehler: '{lines_list_check[i]}' nicht gefunden");
-                    Assert.AreEqual(lines_list[i], lines_list_check[i]);
-                }
-                catch
-                {
-                    Trace.WriteLine($"\n\n");
-                    Trace.WriteLine($"Fehler: Zeile fehlt");
-                    Trace.WriteLine($"---------------------");
-                    Trace.WriteLine($"{lines_list_check[i]}");
-                    Trace.WriteLine($"---------------------");
-                    Assert.Fail(); ;
-
-                }
-
-            }
+            konsole.DarfZeileNichtEnthalten(
+                "Keine reelle Zahl!",
+                "Die Fehlermeldung darf nur erscheinen, wenn die Eingabe keine reelle Zahl ist.");
         }
     }
 }
