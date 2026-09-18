@@ -12,8 +12,12 @@
 
 Aufgabe_1.Aufgabe1();
 
+
+
 public static class Aufgabe_1
 {
+
+
     public static void Aufgabe1()
     {
 
@@ -42,4 +46,29 @@ public static class Aufgabe_1
         Console.WriteLine($"Körpergröße: {groesse} cm");
     }
 
+    public static string EingabeRoutineString()
+    {
+        return Console.ReadLine();
+    }
+
+    public static int EingabeRoutineInt32()
+    {
+        try
+        {
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        catch
+        {
+            Console.WriteLine("Keine ganze Zahl!");
+            return 0;
+        }
+
+
+
+
+    }
 }
+
+
+
